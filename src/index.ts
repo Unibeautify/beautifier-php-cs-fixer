@@ -1,5 +1,3 @@
-import * as prettier from "prettier";
-import { BuiltInParserName } from "prettier";
 import {
   Beautifier,
   Language,
@@ -10,6 +8,8 @@ import {
 import * as readPkgUp from "read-pkg-up";
 import * as tmp from "tmp";
 import * as fs from "fs";
+import * as path from "path";
+import * as os from "os";
 
 import options from "./options";
 const { pkg } = readPkgUp.sync({ cwd: __dirname });
@@ -28,14 +28,23 @@ export const beautifier: Beautifier = {
       parseVersion: [/version (.*) by/, /PHP CS Fixer (\d+\.\d+\.\d+)/]
     }
   ],
-  beautify({ text, dependencies }: BeautifierBeautifyData) {
+  beautify({ text, dependencies, filePath }: BeautifierBeautifyData) {
     const phpCsFixer = dependencies.get<ExecutableDependency>("PHP-CS-Fixer");
+    const basePath: string = os.tmpdir();
     return tmpFile({
       postfix: ".php"
     }).then(filePath =>
       writeFile(filePath, text).then(() =>
         phpCsFixer
-          .run(["fix", "--rules=@PSR2", "--", filePath])
+          .run({
+            args: relativizePaths(
+              ["fix", "--rules=@PSR2", "--using-cache=no", filePath],
+              basePath
+            ),
+            options: {
+              cwd: basePath
+            }
+          })
           .then(({ exitCode, stderr }) => {
             if (exitCode) {
               return Promise.reject(stderr);
@@ -51,7 +60,6 @@ function tmpFile(options: tmp.Options): Promise<string> {
   return new Promise<string>((resolve, reject) =>
     tmp.file(
       {
-        // mode: 0o666,
         prefix: "unibeautify-",
         ...options
       },
@@ -59,8 +67,6 @@ function tmpFile(options: tmp.Options): Promise<string> {
         if (err) {
           return reject(err);
         }
-        // tslint:disable-next-line:no-console
-        console.log(path, fd, err);
         return resolve(path);
       }
     )
@@ -70,7 +76,6 @@ function tmpFile(options: tmp.Options): Promise<string> {
 function writeFile(filePath: string, contents: string): Promise<void> {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, contents, error => {
-      console.error(error);
       if (error) {
         return reject(error);
       }
@@ -87,6 +92,20 @@ function readFile(filePath: string): Promise<string> {
       }
       return resolve(data.toString());
     });
+  });
+}
+
+function relativizePaths(args: string[], basePath: string): string[] {
+  return args.map(arg => {
+    const isTmpFile =
+      typeof arg === "string" &&
+      !arg.includes(":") &&
+      path.isAbsolute(arg) &&
+      path.dirname(arg).startsWith(basePath);
+    if (isTmpFile) {
+      return path.relative(basePath, arg);
+    }
+    return arg;
   });
 }
 

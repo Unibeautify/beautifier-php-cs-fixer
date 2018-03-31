@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should successfully beautify PHP files should successfully beautify file test1.php 1`] = `
+<?php
+
+$hello = "world";
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+require_once("sql.req.php");
+
+
+// friend requests
+$q = $mysqli->query("");
+$num = $q->num_rows;
+echo '<a href="notifications.php">';
+if ($num>0) {
+    echo '<i class="fa fa-star white"></i>';
+} else {
+    echo '<i class="fa fa-star-o"></i>';
+}
+echo '</a>';
+
+
+// new messages
+$q = $mysqli->query("");
+$num = $q->num_rows;
+echo '<a href="messages.php">';
+if ($num>0) {
+    echo '<i class="fa fa-envelope white"></i>';
+} else {
+    echo '<i class="fa fa-envelope-o"></i>';
+}
+echo '</a>';
+
+`;
+
+exports[`should successfully beautify PHP files should successfully beautify file test2.php 1`] = `
+<?php
+function add($a, $b)
+{
+    return $a +$b;
+}
+echo   add(1, 2);
+
+`;
+
+exports[`should successfully beautify PHP files should successfully beautify file test3.php 1`] = `
+<?php
+
+class Date
+{
+    const FORMAT_FULL = 'full';
+    const FORMAT_LONG = 'long';
+    const FORMAT_MEDIUM = 'medium';
+    const FORMAT_SHORT = 'short';
+
+    public static function formatDate($time, $format)
+    {
+        if (!$time || $time == null) {
+            return '';
+        }
+
+        return $time;
+    }
+}
+
+`;

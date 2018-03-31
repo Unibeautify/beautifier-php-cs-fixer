@@ -1,12 +1,15 @@
-import { newUnibeautify, Beautifier } from "unibeautify";
-import beautifier from "../../src";
-
 import * as fs from "fs";
 import * as path from "path";
 
+import { newUnibeautify, Beautifier } from "unibeautify";
+import beautifier from "../../src";
+import { raw } from "../utils";
+
 describe("should successfully beautify PHP files", () => {
-  // tslint:disable-next-line:mocha-no-side-effect-code
+  // tslint:disable:mocha-no-side-effect-code
   testFile("test1.php");
+  testFile("test2.php");
+  testFile("test3.php");
 });
 
 function testFile(fixtureFileName: string) {
@@ -28,7 +31,7 @@ function testFile(fixtureFileName: string) {
         text
       })
       .then(results => {
-        expect(results).toMatchSnapshot();
+        expect(raw(results)).toMatchSnapshot();
       });
   });
 }
