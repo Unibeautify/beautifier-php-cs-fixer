@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Unibeautify/beautifier-prettier.git"
+    "url": "git+https://github.com/Unibeautify/beautifier-php-cs-fixer.git"
   },
   "keywords": [
     "php-cs-fixer",
@@ -25,29 +25,26 @@
   "author": "Glavin Wiechert",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Unibeautify/beautifier-prettier/issues"
+    "url": "https://github.com/Unibeautify/beautifier-php-cs-fixer/issues"
   },
-  "homepage": "https://github.com/Unibeautify/beautifier-prettier#readme",
+  "homepage": "https://github.com/Unibeautify/beautifier-php-cs-fixer#readme",
   "peerDependencies": {
-    "unibeautify": ">= 0.9.1",
-    "prettier": "^1.11.1"
+    "unibeautify": ">= 0.11.2"
   },
   "devDependencies": {
-    "@types/jest": "^22.2.0",
-    "@types/node": "^9.4.7",
-    "@types/prettier": "^1.10.0",
+    "@types/jest": "^22.2.2",
+    "@types/node": "^9.6.2",
     "@types/read-pkg-up": "^3.0.1",
     "@types/tmp": "0.0.33",
-    "jest": "^22.4.2",
+    "jest": "^22.4.3",
     "npm-run-all": "^4.1.2",
-    "prettier": "^1.11.1",
     "rimraf": "^2.6.2",
-    "ts-jest": "^22.4.1",
+    "ts-jest": "^22.4.2",
     "tslint": "^5.7.0",
-    "tslint-clean-code": "^0.2.5",
+    "tslint-clean-code": "^0.2.6",
     "tslint-microsoft-contrib": "^5.0.1",
-    "typescript": "^2.7.2",
-    "unibeautify": "^0.10.1"
+    "typescript": "^2.8.1",
+    "unibeautify": "^0.11.2"
   },
   "dependencies": {
     "read-pkg-up": "^3.0.0",
