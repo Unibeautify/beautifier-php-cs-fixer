@@ -3,7 +3,7 @@ import {
   Language,
   BeautifierBeautifyData,
   DependencyType,
-  ExecutableDependency
+  ExecutableDependency,
 } from "unibeautify";
 import * as readPkgUp from "read-pkg-up";
 import * as tmp from "tmp";
@@ -17,22 +17,20 @@ export const beautifier: Beautifier = {
   name: "PHP-CS-Fixer",
   package: pkg,
   options: {
-    PHP: true
+    PHP: true,
   },
   dependencies: [
     {
       type: DependencyType.Executable,
       name: "PHP-CS-Fixer",
       program: "php-cs-fixer",
-      parseVersion: [/version (.*) by/, /PHP CS Fixer (\d+\.\d+\.\d+)/]
-    }
+      parseVersion: [/version (.*) by/, /PHP CS Fixer (\d+\.\d+\.\d+)/],
+    },
   ],
   beautify({ text, dependencies, filePath }: BeautifierBeautifyData) {
     const phpCsFixer = dependencies.get<ExecutableDependency>("PHP-CS-Fixer");
     const basePath: string = os.tmpdir();
-    return tmpFile({
-      postfix: ".php"
-    }).then(filePath =>
+    return tmpFile({ postfix: ".php" }).then(filePath =>
       writeFile(filePath, text).then(() =>
         phpCsFixer
           .run({
@@ -41,8 +39,8 @@ export const beautifier: Beautifier = {
               basePath
             ),
             options: {
-              cwd: basePath
-            }
+              cwd: basePath,
+            },
           })
           .then(({ exitCode, stderr }) => {
             if (exitCode) {
@@ -52,7 +50,7 @@ export const beautifier: Beautifier = {
           })
       )
     );
-  }
+  },
 };
 
 function tmpFile(options: tmp.Options): Promise<string> {
@@ -60,7 +58,7 @@ function tmpFile(options: tmp.Options): Promise<string> {
     tmp.file(
       {
         prefix: "unibeautify-",
-        ...options
+        ...options,
       },
       (err, path, fd) => {
         if (err) {
