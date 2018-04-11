@@ -7,5 +7,7 @@ export function raw(text: string) {
   if (typeof text !== "string") {
     throw new Error("Raw snapshots have to be strings.");
   }
-  return { [Symbol.for("raw")]: text };
+  return {
+    [Symbol.for("raw")]: text,
+  };
 }

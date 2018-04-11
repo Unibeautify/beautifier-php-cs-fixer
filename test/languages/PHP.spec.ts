@@ -25,10 +25,10 @@ function testFile(fixtureFileName: string) {
         options: {
           PHP: {
             indent_style: "space",
-            indent_size: 2
-          }
+            indent_size: 2,
+          },
         },
-        text
+        text,
       })
       .then(results => {
         expect(raw(results)).toMatchSnapshot();
