@@ -12,6 +12,10 @@ module.exports = {
   ],
   snapshotSerializers: ["<rootDir>/test/raw-serializer.js"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  moduleNameMapper: {
+      "src": "<rootDir>/src/",
+      "@test/(.*)": "<rootDir>/test/$1"
+  },
   collectCoverage: true,
   coverageReporters: ["json", "lcov", "text", "html"],
   coveragePathIgnorePatterns: [

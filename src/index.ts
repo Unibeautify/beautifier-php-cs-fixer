@@ -27,15 +27,29 @@ export const beautifier: Beautifier = {
       parseVersion: [/version (.*) by/, /PHP CS Fixer (\d+\.\d+\.\d+)/],
     },
   ],
-  beautify({ text, dependencies, filePath }: BeautifierBeautifyData) {
+  resolveConfig: ({ filePath, projectPath }) => {
+    const configFiles: string[] = [".php_cs", ".php_cs.dist"];
+    return findFile({ finishPath: projectPath, startPath: filePath, fileNames: configFiles }).then(configFile => {
+      return Promise.resolve({ filePath: configFile });
+    })
+    .catch((err) => {
+      // tslint:disable-next-line
+      console.log(err);
+      return Promise.resolve({});
+    });
+  },
+  beautify({ text, dependencies, filePath, beautifierConfig }: BeautifierBeautifyData) {
     const phpCsFixer = dependencies.get<ExecutableDependency>("PHP-CS-Fixer");
     const basePath: string = os.tmpdir();
+    const config = beautifierConfig && beautifierConfig.filePath ? `--config=${beautifierConfig.filePath}` : "--rules=@PSR2";
+    // tslint:disable-next-line
+    console.log(`Using: ${config}`)
     return tmpFile({ postfix: ".php" }).then(filePath =>
       writeFile(filePath, text).then(() =>
         phpCsFixer
           .run({
             args: relativizePaths(
-              ["fix", "--rules=@PSR2", "--using-cache=no", filePath],
+              ["fix", config, "--using-cache=no", filePath],
               basePath
             ),
             options: {
@@ -52,6 +66,43 @@ export const beautifier: Beautifier = {
     );
   },
 };
+
+function findFile({
+  finishPath = "/",
+  startPath = finishPath,
+  fileNames,
+}: {
+  startPath: string | undefined;
+  finishPath: string | undefined;
+  fileNames: string[];
+}): Promise<string> {
+  // Recursive case: Check & go uuuuppp
+  const filePaths = fileNames.map(fileName => path.join(startPath, fileName));
+  // tslint:disable-next-line
+  return Promise.all(filePaths.map(filePath => doesFileExist(filePath)))
+  .then(exists => filePaths.filter((filePath, index) => exists[index]))
+  .then(foundFilePaths => {
+    if (foundFilePaths.length > 0) {
+        return foundFilePaths[0];
+    }
+    const parentDir = path.resolve(startPath, "../");
+    if (startPath === finishPath) {
+        // Base case: Already at the top / finishPath
+        return Promise.reject("No config file found");
+    }
+    return findFile({
+        startPath: parentDir,
+        finishPath,
+        fileNames,
+    });
+  });
+}
+
+function doesFileExist(filePath: string): Promise<boolean> {
+  return new Promise(resolve => {
+    fs.access(filePath, fs.constants.R_OK, error => resolve(!error));
+  });
+}
 
 function tmpFile(options: tmp.Options): Promise<string> {
   return new Promise<string>((resolve, reject) =>
