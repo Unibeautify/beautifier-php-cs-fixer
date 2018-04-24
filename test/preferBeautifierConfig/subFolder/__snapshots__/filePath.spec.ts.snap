@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should successfully beautify file with config in the same directory 1`] = `
+<?php
+$d = true;
+if ($a) {
+    return 1;
+} else if ($b) {
+  return 2;
+}
+`;

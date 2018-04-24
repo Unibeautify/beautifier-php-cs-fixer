@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should use default @PSR2 since no config will be found 1`] = `
+<?php
+$d = true;
+if ($a) {
+    return 1;
+} elseif ($b) {
+    return 2;
+}
+
+`;
