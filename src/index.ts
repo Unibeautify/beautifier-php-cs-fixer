@@ -32,7 +32,7 @@ export const beautifier: Beautifier = {
     return findFile({ finishPath: projectPath, startPath: filePath, fileNames: configFiles })
     .then(configFile => ({ filePath: configFile }))
     .catch((err) => {
-      // tslint:disable-next-line
+      // tslint:disable-next-line no-console
       console.log(err);
       return Promise.resolve({});
     });
@@ -41,8 +41,8 @@ export const beautifier: Beautifier = {
     const phpCsFixer = dependencies.get<ExecutableDependency>("PHP-CS-Fixer");
     const basePath: string = os.tmpdir();
     const config = beautifierConfig && beautifierConfig.filePath ? `--config=${beautifierConfig.filePath}` : "";
-    // tslint:disable-next-line
-    console.log(`Using config: ${config}`)
+    // tslint:disable-next-line no-console
+    console.log(`Using config: ${config}`);
     return tmpFile({ postfix: ".php" }).then(filePath =>
       writeFile(filePath, text).then(() =>
         phpCsFixer
@@ -76,8 +76,7 @@ function findFile({
   fileNames: string[];
 }): Promise<string> {
   const filePaths = fileNames.map(fileName => path.join(startPath, fileName));
-  // tslint:disable-next-line
-  return Promise.all(filePaths.map(filePath => doesFileExist(filePath)))
+  return Promise.all(filePaths.map(doesFileExist))
   .then(exists => filePaths.filter((filePath, index) => exists[index]))
   .then(foundFilePaths => {
     if (foundFilePaths.length > 0) {
