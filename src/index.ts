@@ -29,18 +29,30 @@ export const beautifier: Beautifier = {
   ],
   resolveConfig: ({ filePath, projectPath }) => {
     const configFiles: string[] = [".php_cs", ".php_cs.dist"];
-    return findFile({ finishPath: projectPath, startPath: filePath, fileNames: configFiles })
-    .then(configFile => ({ filePath: configFile }))
-    .catch((err) => {
-      // tslint:disable-next-line no-console
-      console.log(err);
-      return Promise.resolve({});
-    });
+    return findFile({
+      finishPath: projectPath,
+      startPath: filePath,
+      fileNames: configFiles,
+    })
+      .then(configFile => ({ filePath: configFile }))
+      .catch(err => {
+        // tslint:disable-next-line no-console
+        console.log(err);
+        return Promise.resolve({});
+      });
   },
-  beautify({ text, dependencies, filePath, beautifierConfig }: BeautifierBeautifyData) {
+  beautify({
+    text,
+    dependencies,
+    filePath,
+    beautifierConfig,
+  }: BeautifierBeautifyData) {
     const phpCsFixer = dependencies.get<ExecutableDependency>("PHP-CS-Fixer");
     const basePath: string = os.tmpdir();
-    const config = beautifierConfig && beautifierConfig.filePath ? `--config=${beautifierConfig.filePath}` : "";
+    const config =
+      beautifierConfig && beautifierConfig.filePath
+        ? `--config=${beautifierConfig.filePath}`
+        : "";
     // tslint:disable-next-line no-console
     console.log(`Using config: ${config}`);
     return tmpFile({ postfix: ".php" }).then(filePath =>
@@ -77,21 +89,17 @@ function findFile({
 }): Promise<string> {
   const filePaths = fileNames.map(fileName => path.join(startPath, fileName));
   return Promise.all(filePaths.map(doesFileExist))
-  .then(exists => filePaths.filter((filePath, index) => exists[index]))
-  .then(foundFilePaths => {
-    if (foundFilePaths.length > 0) {
-      return foundFilePaths[0];
-    }
-    if (startPath === finishPath) {
-      return Promise.reject("No config file found");
-    }
-    const parentDir = path.resolve(startPath, "../");
-    return findFile({
-        startPath: parentDir,
-        finishPath,
-        fileNames,
+    .then(exists => filePaths.filter((filePath, index) => exists[index]))
+    .then(foundFilePaths => {
+      if (foundFilePaths.length > 0) {
+        return foundFilePaths[0];
+      }
+      if (startPath === finishPath) {
+        return Promise.reject("No config file found");
+      }
+      const parentDir = path.resolve(startPath, "../");
+      return findFile({ startPath: parentDir, finishPath, fileNames });
     });
-  });
 }
 
 function doesFileExist(filePath: string): Promise<boolean> {
