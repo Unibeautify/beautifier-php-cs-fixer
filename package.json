@@ -1,6 +1,6 @@
 {
   "name": "@unibeautify/beautifier-php-cs-fixer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "PHP-CS-Fixer beautifier for Unibeautify",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
-    "@types/node": "^9.6.6",
+    "@types/node": "^10.0.3",
     "@types/read-pkg-up": "^3.0.1",
     "@types/tmp": "0.0.33",
     "jest": "^22.4.3",
