@@ -12,8 +12,7 @@ test(`should error writing file`, () => {
   const unibeautify = newUnibeautify();
   unibeautify.loadBeautifier(beautifier);
   return expect(
-    unibeautify
-    .beautify({
+    unibeautify.beautify({
       languageName: "PHP",
       options: {
         PHP: {},
