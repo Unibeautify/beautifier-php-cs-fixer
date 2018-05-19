@@ -21,3 +21,7 @@ test(`should error writing file`, () => {
     })
   ).rejects.toThrowError("Write file failed");
 });
+afterAll(() => {
+  jest.resetAllMocks();
+  fs.writeFile = fs.stat.bind(fs);
+});

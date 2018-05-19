@@ -18,3 +18,7 @@ test(`should error writing file`, () => {
     })
   ).rejects.toThrowError("Read file failed");
 });
+afterAll(() => {
+  jest.resetAllMocks();
+  fs.readFile = fs.stat.bind(fs);
+});
