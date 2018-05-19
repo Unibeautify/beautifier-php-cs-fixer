@@ -19,22 +19,30 @@ export const beautifier: Beautifier = {
   badges: [
     {
       description: "Build Status",
-      url: "https://travis-ci.com/Unibeautify/beautifier-php-cs-fixer.svg?branch=master",
+      url:
+        "https://travis-ci.com/Unibeautify/beautifier-php-cs-fixer.svg?branch=master",
       href: "https://travis-ci.com/Unibeautify/beautifier-php-cs-fixer",
     },
     {
       description: "Test Coverage",
-      url: "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/test_coverage",
-      href: "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/test_coverage",
+      url:
+        "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/test_coverage",
+      href:
+        "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/test_covera" +
+        "ge",
     },
     {
       description: "Maintainability",
-      url: "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/maintainability",
-      href: "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/maintainability",
+      url:
+        "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/maintainability",
+      href:
+        "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/maintainabi" +
+        "lity",
     },
     {
       description: "Greenkeeper",
-      url: "https://badges.greenkeeper.io/Unibeautify/beautifier-php-cs-fixer.svg",
+      url:
+        "https://badges.greenkeeper.io/Unibeautify/beautifier-php-cs-fixer.svg",
       href: "https://greenkeeper.io/",
     },
   ],
@@ -58,10 +66,11 @@ export const beautifier: Beautifier = {
         },
         {
           description: "Code Coverage",
-          url: "https://coveralls.io/repos/FriendsOfPHP/PHP-CS-Fixer/badge.svg?service=github",
-          href: "https://coveralls.io/github/FriendsOfPHP/PHP-CS-Fixer"
-        }
-      ]
+          url:
+            "https://coveralls.io/repos/FriendsOfPHP/PHP-CS-Fixer/badge.svg?service=github",
+          href: "https://coveralls.io/github/FriendsOfPHP/PHP-CS-Fixer",
+        },
+      ],
     },
   ],
   resolveConfig: ({ filePath, projectPath }) => {
