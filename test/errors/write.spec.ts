@@ -3,6 +3,7 @@ import beautifier from "../../src";
 import { raw } from "../utils";
 // tslint:disable:mocha-no-side-effect-code
 const fs = require("fs");
+const originalWriteFile = fs.writeFile;
 fs.writeFile = jest.fn((filepath, content, cb) =>
   cb(new Error("Write file failed"))
 );
@@ -23,5 +24,5 @@ test(`should error writing file`, () => {
 });
 afterAll(() => {
   jest.resetAllMocks();
-  fs.writeFile = fs.stat.bind(fs);
+  fs.writeFile = originalWriteFile;
 });

@@ -4,6 +4,7 @@ import { newUnibeautify, Beautifier } from "unibeautify";
 import beautifier from "../../src";
 import { raw } from "../utils";
 const tmp = require("tmp");
+const originalFile = tmp.file;
 jest.mock("tmp", () => ({
   file(options: any, callback: any) {
     return callback(new Error("Create file failed"));
@@ -26,5 +27,5 @@ test(`should error creating tmp file`, () => {
 });
 afterAll(() => {
   jest.resetAllMocks();
-  tmp.file = tmp.stat.bind(tmp);
+  tmp.file = originalFile;
 });
