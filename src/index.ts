@@ -16,6 +16,28 @@ const { pkg } = readPkgUp.sync({ cwd: __dirname });
 export const beautifier: Beautifier = {
   name: "PHP-CS-Fixer",
   package: pkg,
+  badges: [
+    {
+      description: "Build Status",
+      url: "https://travis-ci.com/Unibeautify/beautifier-php-cs-fixer.svg?branch=master",
+      href: "https://travis-ci.com/Unibeautify/beautifier-php-cs-fixer",
+    },
+    {
+      description: "Test Coverage",
+      url: "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/test_coverage",
+      href: "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/test_coverage",
+    },
+    {
+      description: "Maintainability",
+      url: "https://api.codeclimate.com/v1/badges/5412cdac960ca7eda78f/maintainability",
+      href: "https://codeclimate.com/github/Unibeautify/beautifier-php-cs-fixer/maintainability",
+    },
+    {
+      description: "Greenkeeper",
+      url: "https://badges.greenkeeper.io/Unibeautify/beautifier-php-cs-fixer.svg",
+      href: "https://greenkeeper.io/",
+    },
+  ],
   options: {
     PHP: true,
   },
@@ -25,6 +47,21 @@ export const beautifier: Beautifier = {
       name: "PHP-CS-Fixer",
       program: "php-cs-fixer",
       parseVersion: [/version (.*) by/, /PHP CS Fixer (\d+\.\d+\.\d+)/],
+      homepageUrl: "https://cs.sensiolabs.org/",
+      installationUrl: "https://cs.sensiolabs.org/#installation",
+      bugsUrl: "https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues",
+      badges: [
+        {
+          description: "Build Status (Travis CI)",
+          url: "https://travis-ci.org/FriendsOfPHP/PHP-CS-Fixer.svg",
+          href: "https://travis-ci.org/FriendsOfPHP/PHP-CS-Fixer",
+        },
+        {
+          description: "Code Coverage",
+          url: "https://coveralls.io/repos/FriendsOfPHP/PHP-CS-Fixer/badge.svg?service=github",
+          href: "https://coveralls.io/github/FriendsOfPHP/PHP-CS-Fixer"
+        }
+      ]
     },
   ],
   resolveConfig: ({ filePath, projectPath }) => {

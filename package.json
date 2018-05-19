@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/Unibeautify/beautifier-php-cs-fixer#readme",
   "peerDependencies": {
-    "unibeautify": ">= 0.13.0"
+    "unibeautify": ">= 0.15.0"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
@@ -44,7 +44,7 @@
     "tslint-clean-code": "^0.2.7",
     "tslint-microsoft-contrib": "^5.0.1",
     "typescript": "^2.8.3",
-    "unibeautify": "^0.14.0"
+    "unibeautify": "^0.15.0"
   },
   "dependencies": {
     "read-pkg-up": "^3.0.0",
