@@ -2,11 +2,16 @@ import { newUnibeautify, Beautifier } from "unibeautify";
 import beautifier from "../../src";
 import { raw } from "../utils";
 // tslint:disable:mocha-no-side-effect-code
-const fs = require("fs");
-const originalWriteFile = fs.writeFile;
-fs.writeFile = jest.fn((filepath, content, cb) =>
-  cb(new Error("Write file failed"))
-);
+jest.mock("fs", () => {
+  const fs = require.requireActual("fs");
+  const writeFile = jest.fn((path, options, callback) =>
+    callback(new Error("Write file failed"))
+  );
+  return {
+    ...fs,
+    writeFile,
+  };
+});
 test(`should error writing file`, () => {
   const text: string = `<?php $temp = 1; ?>`;
   const unibeautify = newUnibeautify();
@@ -20,8 +25,4 @@ test(`should error writing file`, () => {
       text,
     })
   ).rejects.toThrowError("Write file failed");
-});
-afterAll(() => {
-  jest.resetAllMocks();
-  fs.writeFile = originalWriteFile;
 });

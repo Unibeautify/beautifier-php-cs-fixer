@@ -2,12 +2,17 @@ import { newUnibeautify, Beautifier } from "unibeautify";
 import beautifier from "../../src";
 import { raw } from "../utils";
 // tslint:disable:mocha-no-side-effect-code
-const fs = require("fs");
-const originalReadFile = fs.readFile;
-beforeEach(() => {
-  fs.readFile = jest.fn((filepath, cb) => cb(new Error("Read file failed")));
+jest.mock("fs", () => {
+  const fs = require.requireActual("fs");
+  const readFile = jest.fn((path, callback) =>
+    callback(new Error("Read file failed"))
+  );
+  return {
+    ...fs,
+    readFile,
+  };
 });
-test(`should error writing file`, () => {
+test(`should error reading file`, () => {
   const text: string = `<?php $temp = 1; ?>`;
   const unibeautify = newUnibeautify();
   unibeautify.loadBeautifier(beautifier);
@@ -20,8 +25,4 @@ test(`should error writing file`, () => {
       text,
     })
   ).rejects.toThrowError("Read file failed");
-});
-afterAll(() => {
-  jest.resetAllMocks();
-  fs.readFile = originalReadFile;
 });
