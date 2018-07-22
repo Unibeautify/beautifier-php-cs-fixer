@@ -83,7 +83,7 @@ export const beautifier: Beautifier = {
       .then(configFile => ({ filePath: configFile }))
       .catch(err => {
         // tslint:disable-next-line no-console
-        console.log(err);
+        console.error(err);
         return Promise.resolve({});
       });
   },
@@ -100,7 +100,7 @@ export const beautifier: Beautifier = {
         ? `--config=${beautifierConfig.filePath}`
         : "";
     // tslint:disable-next-line no-console
-    console.log(`Using config: ${config}`);
+    console.error(`Using config: ${config}`);
     return tmpFile({ postfix: ".php" }).then(filePath =>
       writeFile(filePath, text).then(() =>
         phpCsFixer
