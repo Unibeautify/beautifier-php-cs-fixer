@@ -11,7 +11,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
 
-const pkg = readPkgUp.sync({ cwd: __dirname })!.package;
+const pkg = readPkgUp.sync({ cwd: __dirname })!.packageJson;
 
 export const beautifier: Beautifier = {
   name: "PHP-CS-Fixer",
